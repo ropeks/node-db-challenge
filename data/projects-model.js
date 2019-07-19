@@ -12,7 +12,7 @@ function getProject(id) {
 function getActions(id) {
     return db('actions')
         .select('id', 'description', 'notes', 'completed')
-        .where({ id });
+        .where('actions.project_id', id);
 }
 
 function addProject({ name, description, completed }) {

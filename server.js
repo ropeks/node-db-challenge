@@ -8,17 +8,17 @@ server.get('/', (req, res) => {
   res.json({ message: 'welcome to the projects API' });
 });
 
-server.get('/api/projects', async (req, res) => {
-    const response = [];
-    const projects = await db.getProjects();
-    projects.map(async (project) => {
-        const actions = await db.getActions(project.id);
-        const projectToAdd = { ...project, actions: actions[0] }
-        response.push(projectToAdd);
-        console.log(response);
-    })
-    res.json(response);
-})
+// server.get('/api/projects', async (req, res) => {
+//     const response = [];
+//     const projects = await db.getProjects();
+//     projects.map(async (project) => {
+//         const actions = await db.getActions(project.id);
+//         const projectToAdd = { ...project, actions: actions[0] }
+//         response.push(projectToAdd);
+//         console.log(response);
+//     })
+//     res.json(response);
+// })
 
 server.get('/api/projects/:id', async (req, res) => {
     const project = await db.getProject(req.params.id);
@@ -28,7 +28,7 @@ server.get('/api/projects/:id', async (req, res) => {
         "name": project[0].name,
         "description": project[0].description,
         "completed": project[0].completed,
-        "actions": actions[0] 
+        "actions": actions
     });
 })
 
