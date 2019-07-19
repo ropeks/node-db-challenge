@@ -8,6 +8,18 @@ server.get('/', (req, res) => {
   res.json({ message: 'welcome to the projects API' });
 });
 
+server.get('/api/projects', async (req, res) => {
+    const response = [];
+    const projects = await db.getProjects();
+    projects.map(async (project) => {
+        const actions = await db.getActions(project.id);
+        const projectToAdd = { ...project, actions: actions[0] }
+        response.push(projectToAdd);
+        console.log(response);
+    })
+    res.json(response);
+})
+
 server.get('/api/projects/:id', async (req, res) => {
     const project = await db.getProject(req.params.id);
     const actions = await db.getActions(req.params.id);
